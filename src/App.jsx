@@ -1,11 +1,10 @@
-// Inside App.jsx or your Dashboard component
-import TripQueue from './components/TripQueue';
-import DriverStatus from './components/DriverStatus';
+function App() {
+  return (
+    <div>
+      <h1>Pakisa Logistics Portal</h1>
+      {/* Add your other components here later */}
+    </div>
+  );
+}
 
-// When mapping through your trips:
-{trips.map(trip => (
-  <div key={trip.id}>
-    <p>{trip.waybill}</p>
-    <DriverStatus tripId={trip.id} />
-  </div>
-))}
+export default App; // <--- THIS IS THE CRITICAL LINE
