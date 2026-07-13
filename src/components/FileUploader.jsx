@@ -1,15 +1,9 @@
-# I will create a template for the FileUploader.jsx component
-# This component will handle CSV parsing and uploading to Firebase Firestore.
-
-uploader_component = """
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { db } from '../firebase'; // Ensure you have firebase.js configured
+import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 const FileUploader = () => {
-  const [file, setFile] = useState(null);
-
   const handleFileUpload = (e) => {
     const uploadedFile = e.target.files[0];
     Papa.parse(uploadedFile, {
@@ -17,12 +11,12 @@ const FileUploader = () => {
       skipEmptyLines: true,
       complete: async (results) => {
         const data = results.data;
-        // Upload each row to Firestore 'tripsheets' collection
         for (const row of data) {
           await addDoc(collection(db, 'tripsheets'), {
             waybill: row.Waybill,
             consignee: row.Receiver,
             address: row.DestAdd1,
+            suburb: row.DestAdd2,
             status: 'Pending',
             createdAt: new Date()
           });
@@ -41,6 +35,3 @@ const FileUploader = () => {
 };
 
 export default FileUploader;
-"""
-
-print(uploader_component)
